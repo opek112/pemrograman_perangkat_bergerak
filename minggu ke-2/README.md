@@ -12,8 +12,8 @@ pada minggu ini saya memahami bahwa flutter tidak bisa bikin componen di halaman
 ## 2. Bukti Tangkapan Layar (Running App)
 [Sertakan minimal 2 screenshot bukti aplikasi profil berjalan di emulator atau HP fisik Anda]
 
-![Screenshot Running 1](./screenshots/running_01.JPG)
-![Screenshot Running 2](./screenshots/running_02.JPG)
+![Screenshot Running 1](./screenshots/dekstop.JPG)
+![Screenshot Running 2](./screenshots/mobile.JPG)
 
 ## 3. Kendala yang Dihadapi & Solusinya
 - **Kendala**: Perintah `flutter` tidak dikenali di terminal (`'flutter' is not recognized as an internal or external command`) saat pertama kali setup di Windows. Selain itu, terjadi kendala saat build/deteksi Android toolchain akibat konfigurasi path Java/JDK dan Android SDK yang belum terdaftar secara tepat di Environment Variables sistem.

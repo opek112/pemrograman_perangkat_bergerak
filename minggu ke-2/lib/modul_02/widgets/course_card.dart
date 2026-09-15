@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../models/course.dart';
 
 class CourseCard extends StatelessWidget {
@@ -47,14 +48,20 @@ class CourseCard extends StatelessWidget {
                 // Info dosen pengampu
                 Row(
                   children: [
-                    Icon(Icons.person_outline, size: 16, color: theme.colorScheme.onSurfaceVariant),
+                    Icon(
+                      Icons.person_outline,
+                      size: 16,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Text(
                         course.lecturer,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
                       ),
                     ),
                   ],
@@ -64,15 +71,24 @@ class CourseCard extends StatelessWidget {
                 // Ruang kelas/lab
                 Row(
                   children: [
-                    Icon(Icons.meeting_room_outlined, size: 16, color: theme.colorScheme.onSurfaceVariant),
+                    Icon(
+                      Icons.meeting_room_outlined,
+                      size: 16,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
                     const SizedBox(width: 6),
                     Text(
                       course.room,
-                      style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
                     ),
                   ],
                 ),
-                const Spacer(),
+                // Jarak vertikal tetap sebelum progress bar.
+                // Jangan gunakan Spacer: tinggi Column ini mengikuti konten Card,
+                // sehingga tidak memiliki sisa tinggi yang pasti untuk dibagi.
+                const SizedBox(height: 16),
 
                 // Progress bar silabus
                 Column(
@@ -84,7 +100,9 @@ class CourseCard extends StatelessWidget {
                         Text('Progres Sesi', style: theme.textTheme.labelSmall),
                         Text(
                           '${(course.progress * 100).toInt()}%',
-                          style: theme.textTheme.labelSmall?.copyWith(fontWeight: FontWeight.bold),
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ],
                     ),

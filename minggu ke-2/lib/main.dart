@@ -1,194 +1,151 @@
 import 'package:flutter/material.dart';
 
+// import 'modul_02/academic_dashboard_screen.dart';
+import 'modul_02/studikasus/ruangpraktikum.dart';
+
 void main() {
-  runApp(const PoliwangiProfileApp());
+  runApp(const PoliwangiMobileApp());
 }
 
-class PoliwangiProfileApp extends StatelessWidget {
-  const PoliwangiProfileApp({super.key});
+class PoliwangiMobileApp extends StatelessWidget {
+  const PoliwangiMobileApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Praktikum Mobile TRPL Poliwangi',
       debugShowCheckedModeBanner: false,
-      title: 'Profil Mahasiswa TRPL',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0284C7)),
         useMaterial3: true,
       ),
-      home: const ProfileScreen(),
+      home: const ModuleLauncherScreen(),
     );
   }
 }
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+class ModuleLauncherScreen extends StatefulWidget {
+  const ModuleLauncherScreen({super.key});
+
+  @override
+  State<ModuleLauncherScreen> createState() => _ModuleLauncherScreenState();
+}
+
+class _ModuleLauncherScreenState extends State<ModuleLauncherScreen> {
+  // Status pembukaan modul
+  bool _isModul02Unlocked = false;
+
+  void _handleUnlockModul02() {
+    if (_isModul02Unlocked) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const RuangPraktikumScreen()),
+      );
+      return;
+    }
+
+    final TextEditingController tokenController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Masukkan Token Akses Kelas'),
+        content: TextField(
+          controller: tokenController,
+          decoration: const InputDecoration(
+            hintText: 'Contoh: TRPL-M02 atau POLIWANGI2026',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('Batal'),
+          ),
+          FilledButton(
+            onPressed: () {
+              final token = tokenController.text.trim();
+              if (token == 'TRPL-M02' || token == 'POLIWANGI2026') {
+                setState(() {
+                  _isModul02Unlocked = true;
+                });
+                Navigator.pop(ctx);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RuangPraktikumScreen(),
+                  ),
+                );
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'Token salah! Gunakan TRPL-M02 atau POLIWANGI2026',
+                    ),
+                  ),
+                );
+              }
+            },
+            child: const Text('Buka Modul'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
       appBar: AppBar(
         title: const Text(
-          'Profil Mahasiswa',
+          'Peta Modul Praktikum Mobile',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: const Color(0xFF0284C7),
         foregroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // ── Avatar ─────────────────────────────────────────────
-              Container(
-                width: 96,
-                height: 96,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE0F2FE),
-                  shape: BoxShape.circle,
-                  border: Border.all(color: const Color(0xFF0284C7), width: 3),
-                ),
-                child: const Icon(
-                  Icons.school_rounded,
-                  size: 52,
-                  color: Color(0xFF0284C7),
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // ── GANTI: Nama Anda ──────────────────────────────────
-              const Text(
-                'Taufiq Hidayat',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF0F172A),
-                ),
-              ),
-              const SizedBox(height: 6),
-
-              // ── GANTI: NIM Anda ───────────────────────────────────
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFDBEAFE),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Text(
-                  'NIM: 362558302103',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1D4ED8),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              // ── Kartu Info Akademik ──────────────────────────────
-              Card(
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  side: const BorderSide(color: Color(0xFFE2E8F0)),
-                ),
-                color: Colors.white,
-                child: const Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      _InfoRow(
-                        icon: Icons.business_rounded,
-                        label: 'Jurusan',
-                        value: 'Bisnis dan Informatika',
-                      ),
-                      Divider(height: 24, color: Color(0xFFF1F5F9)),
-                      _InfoRow(
-                        icon: Icons.code_rounded,
-                        label: 'Program Studi',
-                        value: 'Sarjana Terapan TRPL',
-                      ),
-                      Divider(height: 24, color: Color(0xFFF1F5F9)),
-                      _InfoRow(
-                        icon: Icons.location_on_rounded,
-                        label: 'Kampus',
-                        value: 'Politeknik Negeri Banyuwangi',
-                      ),
-                      Divider(height: 24, color: Color(0xFFF1F5F9)),
-                      _InfoRow(
-                        icon: Icons.calendar_today_rounded,
-                        label: 'Semester / TA',
-                        value: 'Semester 5 (2026/2027)',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          const Text(
+            'Pilih modul yang sedang aktif di laboratorium:',
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
           ),
-        ),
+          const SizedBox(height: 12),
+          // Modul 01
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.check_circle, color: Colors.green),
+              title: const Text('Modul 01: Mobile Ecosystem & Setup'),
+              subtitle: const Text('Status: Selesai / Aktif'),
+            ),
+          ),
+          const SizedBox(height: 8),
+          // Modul 02
+          Card(
+            elevation: 3,
+            child: ListTile(
+              leading: Icon(
+                _isModul02Unlocked
+                    ? Icons.lock_open_rounded
+                    : Icons.lock_outline_rounded,
+                color: _isModul02Unlocked ? Colors.blue : Colors.orange,
+              ),
+              title: const Text(
+                'Modul 02: Declarative UI & Responsive Layout',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(
+                _isModul02Unlocked
+                    ? 'Akses Terbuka — Klik untuk masuk'
+                    : 'Terkunci — Masukkan Token Akses',
+              ),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: _handleUnlockModul02,
+            ),
+          ),
+        ],
       ),
-    );
-  }
-}
-
-class _InfoRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-
-  const _InfoRow({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: const Color(0xFFF0F9FF),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(icon, size: 20, color: const Color(0xFF0284C7)),
-        ),
-        const SizedBox(width: 14),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 11,
-                  color: Color(0xFF64748B),
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF0F172A),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }
