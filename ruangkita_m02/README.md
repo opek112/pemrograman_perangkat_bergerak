@@ -6,7 +6,7 @@
 
 ## 1. Identitas Mahasiswa & Domain
 - **Nama**: Taufiq Hidayat
-- **NIM**: (Tulis NIM Lengkap Anda)
+- **NIM**: 362558302103
 - **Digit Terakhir NIM**: 3
 - **Domain Aplikasi**: Ruang Praktikum (Praktikum pemrograman, elektronika, desain)
 - **Kode Identitas UI Wajib**: `M02-2103`
