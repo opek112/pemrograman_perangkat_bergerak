@@ -20,7 +20,7 @@ class _RuangPraktikumPageState extends State<RuangPraktikumPage> {
   String _selectedFilter = 'Semua';
 
   // CATATAN: Ganti 'XXXX' dengan 4 digit terakhir NIM Anda (contoh: M02-0043)
-  static const String identityCode = 'M02-XXXX';
+  static const String identityCode = 'M02-2103';
 
   List<RoomSession> get _filteredSessions {
     if (_selectedFilter == 'Semua') return _allSessions;
