@@ -38,10 +38,10 @@ Implementasi layout adaptif mengacu pada tiga kelas lebar (breakpoint):
 Seluruh screenshot berikut menampilkan label identitas wajib **M02-2103** di sisi kanan atas *AppBar*.
 
 ### 1. Mobile Portrait (Light Mode - 360 x 800)
-![Mobile Light](screenshots/01_mobile_light.png)
+![Mobile Light](screenshots/01_mobile_light.PNG)
 
 ### 2. Tablet (Medium 2 Kolom - 720 x 1024)
-![Tablet](screenshots/02_tablet.png)
+![Tablet](screenshots/02_tablet.PNG)
 
 ### 3. Expanded (Wide 2 Kolom + Panel Ringkasan - 1024 x 800)
 ![Expanded](screenshots/03_expanded.png)

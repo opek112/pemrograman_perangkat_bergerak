@@ -15,7 +15,7 @@ Saat menguji data teks panjang (> 35 karakter) pada judul sesi praktikum di mode
 
 ### 2. Bukti Screenshot
 - **Sebelum Perbaikan**: Terjadi overflow visual di sisi kanan judul kartu.
-- **Sesudah Perbaikan**: Teks terpotong rapi dengan elipsis tanpa menabrak badge status (`screenshots/01_mobile_light.png`).
+- **Sesudah Perbaikan**: Teks terpotong rapi dengan elipsis tanpa menabrak badge status (`screenshots/01_mobile_light.PNG`).
 
 ### 3. Dugaan Akar Masalah
 Secara default, widget `Text` di dalam `Column` akan mengukur panjang teks berdasarkan intrinsik konten. Karena badge diletakkan sebagai layer overlay (`Positioned`) di kanan atas selebar ±80 dp, teks judul yang panjang tidak menyadari adanya badge tersebut dan tetap mengambil lebar penuh kontainer, memicu tabrakan visual dan overflow.
@@ -48,7 +48,7 @@ Ketika breakpoint medium (lebar 720 dp) aktif, GridView.builder dengan 2 kolom m
 
 ### 2. Bukti Screenshot
 - **Sebelum Perbaikan**: Kartu terlalu tinggi dan menyisakan banyak ruang kosong di bawah deskripsi.
-- **Sesudah Perbaikan**: Proporsi kartu rapat dan seimbang (screenshots/02_tablet.png).(`screenshots/01_mobile_light.png`).
+- **Sesudah Perbaikan**: Proporsi kartu rapat dan seimbang (screenshots/02_tablet.png).(`screenshots/02_tablet.PNG`).
 
 ### 3. Dugaan Akar Masalah
 Parameter default childAspectRatio pada SliverGridDelegateWithFixedCrossAxisCount bernilai 1.0 (persegi sama sisi). Rumus childAspectRatio adalah $\text{Lebar} / \text{Tinggi}$. Nilai yang terlalu kecil membuat kontainer kartu dipaksa memiliki tinggi yang berlebihan oleh constraints parent grid.
