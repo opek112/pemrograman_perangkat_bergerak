@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../models/room_session.dart';
 
 class RuangPraktikumPage extends StatefulWidget {
@@ -71,9 +72,8 @@ class _RuangPraktikumPageState extends State<RuangPraktikumPage> {
                   const SizedBox(height: 16),
                   Text(
                     session.title,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                    style: Theme.of(context).textTheme.titleLarge
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
                   Wrap(
@@ -82,7 +82,8 @@ class _RuangPraktikumPageState extends State<RuangPraktikumPage> {
                     children: [
                       Chip(
                         label: Text(session.status),
-                        backgroundColor: _getStatusColor(session.status).withOpacity(0.15),
+                        backgroundColor: _getStatusColor(session.status)
+                            .withOpacity(0.15),
                         labelStyle: TextStyle(
                           color: _getStatusColor(session.status),
                           fontWeight: FontWeight.bold,
@@ -131,7 +132,9 @@ class _RuangPraktikumPageState extends State<RuangPraktikumPage> {
                   const SizedBox(height: 4),
                   Text(
                     session.description,
-                    style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
                   ),
                   const SizedBox(height: 24),
                   SizedBox(
@@ -154,33 +157,36 @@ class _RuangPraktikumPageState extends State<RuangPraktikumPage> {
   Widget _buildCard(RoomSession session) {
     final statusColor = _getStatusColor(session.status);
 
-    return InkWell(
-      onTap: () => _showDetailBottomSheet(context, session),
-      borderRadius: BorderRadius.circular(16),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Theme.of(context).dividerColor.withOpacity(0.3)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 8,
-              offset: const Offset(0, 3),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => _showDetailBottomSheet(context, session),
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Theme.of(context).dividerColor.withOpacity(0.3),
             ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.04),
+                blurRadius: 8,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Baris 1: Judul & Badge Status (Tanpa Stack, Otomatis Flex)
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Padding kanan agar teks judul tidak tertimpa badge status di Stack
-                  Padding(
-                    padding: const EdgeInsets.only(right: 95.0),
+                  Expanded(
                     child: Text(
                       session.title,
                       maxLines: 2,
@@ -191,79 +197,94 @@ class _RuangPraktikumPageState extends State<RuangPraktikumPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      const Icon(Icons.access_time, size: 14, color: Colors.grey),
-                      const SizedBox(width: 6),
-                      Expanded(
-                        child: Text(
-                          session.time,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      const Icon(Icons.location_on_outlined, size: 14, color: Colors.grey),
-                      const SizedBox(width: 6),
-                      Expanded(
-                        child: Text(
-                          session.roomName,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 12, color: Colors.grey),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
+                  const SizedBox(width: 8),
                   Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
-                      color: statusColor.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8),
+                      color: statusColor,
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      session.description,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      session.status,
+                      style: const TextStyle(
+                        color: Colors.white,
                         fontSize: 11,
-                        color: statusColor,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
-            // Indikator Badge Overlay menggunakan Stack & Positioned
-            Positioned(
-              top: 14,
-              right: 14,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              const SizedBox(height: 8),
+
+              // Baris 2: Waktu
+              Row(
+                children: [
+                  const Icon(Icons.access_time, size: 14, color: Colors.grey),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      session.time,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+
+              // Baris 3: Lokasi
+              Row(
+                children: [
+                  const Icon(
+                    Icons.location_on_outlined,
+                    size: 14,
+                    color: Colors.grey,
+                  ),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      session.roomName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey, // Disesuaikan ke abu-abu
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+
+              // Baris 4: Deskripsi
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
-                  color: statusColor,
-                  borderRadius: BorderRadius.circular(20),
+                  color: statusColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
-                  session.status,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  session.description,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
                     fontSize: 11,
-                    fontWeight: FontWeight.bold,
+                    color: statusColor,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -284,14 +305,15 @@ class _RuangPraktikumPageState extends State<RuangPraktikumPage> {
         children: [
           Row(
             children: [
-              Icon(Icons.dashboard_outlined,
-                  color: Theme.of(context).colorScheme.primary),
+              Icon(
+                Icons.dashboard_outlined,
+                color: Theme.of(context).colorScheme.primary,
+              ),
               const SizedBox(width: 8),
               Text(
                 'Ringkasan Hari Ini',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(context).textTheme.titleMedium
+                    ?.copyWith(fontWeight: FontWeight.bold),
               ),
             ],
           ),
@@ -299,13 +321,16 @@ class _RuangPraktikumPageState extends State<RuangPraktikumPage> {
           Text('• Total Jadwal: ${_allSessions.length} sesi'),
           const SizedBox(height: 6),
           Text(
-              '• Sedang Berlangsung: ${_allSessions.where((s) => s.status == 'Berlangsung').length} ruang'),
+            '• Sedang Berlangsung: ${_allSessions.where((s) => s.status == 'Berlangsung').length} ruang',
+          ),
           const SizedBox(height: 6),
           Text(
-              '• Tersedia Kosong: ${_allSessions.where((s) => s.status == 'Tersedia').length} ruang'),
+            '• Tersedia Kosong: ${_allSessions.where((s) => s.status == 'Tersedia').length} ruang',
+          ),
           const SizedBox(height: 6),
           Text(
-              '• Telah Selesai: ${_allSessions.where((s) => s.status == 'Selesai').length} ruang'),
+            '• Telah Selesai: ${_allSessions.where((s) => s.status == 'Selesai').length} ruang',
+          ),
         ],
       ),
     );
@@ -341,7 +366,8 @@ class _RuangPraktikumPageState extends State<RuangPraktikumPage> {
       body: LayoutBuilder(
         builder: (context, constraints) {
           final isCompact = constraints.maxWidth < 600;
-          final isMedium = constraints.maxWidth >= 600 && constraints.maxWidth < 840;
+          final isMedium =
+              constraints.maxWidth >= 600 && constraints.maxWidth < 840;
           final isExpanded = constraints.maxWidth >= 840;
 
           return SingleChildScrollView(
@@ -352,43 +378,54 @@ class _RuangPraktikumPageState extends State<RuangPraktikumPage> {
                 Wrap(
                   spacing: 8,
                   runSpacing: 8,
-                  children: ['Semua', 'Berlangsung', 'Akan Datang', 'Tersedia', 'Selesai']
-                      .map(
-                        (filter) => ChoiceChip(
-                          label: Text(filter),
-                          selected: _selectedFilter == filter,
-                          onSelected: (selected) {
-                            if (selected) {
-                              setState(() => _selectedFilter = filter);
-                            }
-                          },
-                        ),
-                      )
-                      .toList(),
+                  children:
+                      [
+                            'Semua',
+                            'Berlangsung',
+                            'Akan Datang',
+                            'Tersedia',
+                            'Selesai',
+                          ]
+                          .map(
+                            (filter) => ChoiceChip(
+                              label: Text(filter),
+                              selected: _selectedFilter == filter,
+                              onSelected: (selected) {
+                                if (selected) {
+                                  setState(() => _selectedFilter = filter);
+                                }
+                              },
+                            ),
+                          )
+                          .toList(),
                 ),
                 const SizedBox(height: 16),
 
                 if (isCompact)
                   Column(
                     children: _filteredSessions
-                        .map((s) => Padding(
-                              padding: const EdgeInsets.only(bottom: 12),
-                              child: _buildCard(s),
-                            ))
+                        .map(
+                          (s) => Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: _buildCard(s),
+                          ),
+                        )
                         .toList(),
                   )
                 else if (isMedium)
                   GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 14,
-                      mainAxisSpacing: 14,
-                      childAspectRatio: 1.85,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 14,
+                          mainAxisSpacing: 14,
+                          childAspectRatio: 1.85,
+                        ),
                     itemCount: _filteredSessions.length,
-                    itemBuilder: (context, index) => _buildCard(_filteredSessions[index]),
+                    itemBuilder: (context, index) =>
+                        _buildCard(_filteredSessions[index]),
                   )
                 else if (isExpanded)
                   Row(
@@ -399,22 +436,20 @@ class _RuangPraktikumPageState extends State<RuangPraktikumPage> {
                         child: GridView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
-                            childAspectRatio: 1.9,
-                          ),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 16,
+                                mainAxisSpacing: 16,
+                                childAspectRatio: 1.9,
+                              ),
                           itemCount: _filteredSessions.length,
                           itemBuilder: (context, index) =>
                               _buildCard(_filteredSessions[index]),
                         ),
                       ),
                       const SizedBox(width: 20),
-                      Expanded(
-                        flex: 1,
-                        child: _buildSummaryPanel(),
-                      ),
+                      Expanded(flex: 1, child: _buildSummaryPanel()),
                     ],
                   ),
               ],
